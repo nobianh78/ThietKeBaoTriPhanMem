@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "DPM235407_NguyenTuanAnh_Tuan01_Factory_Real_NhanVien_DP/1.0.0": {
+        "runtime": {
+          "DPM235407_NguyenTuanAnh_Tuan01_Factory_Real_NhanVien_DP.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DPM235407_NguyenTuanAnh_Tuan01_Factory_Real_NhanVien_DP/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
