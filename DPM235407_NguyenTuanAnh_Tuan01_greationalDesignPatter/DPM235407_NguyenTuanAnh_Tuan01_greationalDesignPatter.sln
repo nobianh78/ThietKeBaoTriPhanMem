@@ -1,9 +1,9 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbstractFactory", "AbstractFactory\AbstractFactory.csproj", "{DADD63A7-B0D4-4757-9BB4-427D4B88628E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbstractFactory", "DPM235407_NguyenTuanAnh_Tuan01_greationalDesignPatter\AbstractFactory.csproj", "{DADD63A7-B0D4-4757-9BB4-427D4B88628E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPM235407_NguyenTuanAnh_Tuan01_Factory-DP", "DPM235407_NguyenTuanAnh_Tuan01_Factory-DP\DPM235407_NguyenTuanAnh_Tuan01_Factory-DP.csproj", "{351CCF75-912C-4555-8B0C-749BE2857273}"
 EndProject
