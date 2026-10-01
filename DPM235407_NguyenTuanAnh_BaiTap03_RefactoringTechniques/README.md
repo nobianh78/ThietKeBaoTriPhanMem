@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛠️ BÀI TẬP 03: REFACTORING TECHNIQUES (CÁC KỸ THUẬT TÁI CẤU TRÚC MÃ NGUỒN)
+# 🛠️ BÀI TẬP 03: REFACTORING TECHNIQUES (ĐẦY ĐỦ 32 KỸ THUẬT)
 ### HỆ THỐNG QUẢN LÝ BÁN HÀNG CÔNG TY NÔNG DƯỢC AN GIANG
 **TRƯỜNG ĐẠI HỌC AN GIANG — ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH**
 
@@ -13,7 +13,7 @@
 
 <br/>
 
-> *"Tái cấu trúc mã nguồn theo chuẩn Refactoring.Guru kết hợp giải quyết các Code Smell thực tế từ mã nguồn gốc Cửa hàng Nông Dược An Giang."*
+> *"Tái cấu trúc mã nguồn toàn diện với đầy đủ 32 kỹ thuật Refactoring (Composing Methods, Moving Features, Organizing Data) theo chuẩn Refactoring.Guru và giải quyết triệt để các Code Smell trong hệ thống Nông Dược An Giang."*
 
 </div>
 
@@ -33,150 +33,86 @@
 
 ---
 
-## 📋 TỔNG QUAN CẤU TRÚC BÀI TẬP 03
+## 📋 DANH SÁCH ĐẦY ĐỦ 32 KỸ THUẬT REFACTORING
 
-Dự án được tổ chức thành file Solution `DPM235407_NguyenTuanAnh_BaiTap03_RefactoringTechniques.sln` gồm **3 Projects C#** tương ứng với 3 nhóm kỹ thuật tái cấu trúc trọng tâm:
-
-```
-DPM235407_NguyenTuanAnh_BaiTap03_RefactoringTechniques/
-│
-├── DPM235407_NguyenTuanAnh_BaiTap03_RefactoringTechniques.sln
-├── README.md
-│
-├── DPM235407_NguyenTuanAnh_BaiTap03_01_ComposingMethods/       <-- [Nhóm 1] Composing Methods
-│   ├── 01_Extract_Inline_Method/
-│   │   ├── 01_ExtractMethod_Before.cs                          (Code Smell: Long Method)
-│   │   ├── 01_ExtractMethod_After.cs                           (Extract Method & Inline Method)
-│   │   └── 01_ExtractMethod_Real_LapPhieuBanHang.cs            (Refactor Luu() & ChiTiet frmBanLe.cs)
-│   ├── 02_Extract_Inline_Temp_Query/
-│   │   ├── 02_TempVariables_Before.cs                          (Code Smell: Temporary Variables)
-│   │   ├── 02_TempVariables_After.cs                           (Replace Temp with Query & Extract Variable)
-│   │   └── 02_TempVariables_Real_TinhGiaBanChietKhau.cs        (Refactor tính giá sỉ & chiết khấu frmBanSi.cs)
-│   ├── 03_Split_Temp_Remove_Assignments/
-│   │   ├── 03_SplitTemp_Before.cs                              (Reusing Temp & Parameter Assignments)
-│   │   ├── 03_SplitTemp_After.cs                               (Split Temp Variable & In Parameters)
-│   │   └── 03_SplitTemp_Real_PhanBoSoLuongXuatKho.cs           (Refactor phân bổ số lượng FEFO kho nông dược)
-│   ├── 04_Method_Object_Substitute_Algorithm/
-│   │   ├── 04_MethodObject_Before.cs                           (Complex Method với chằng chịt biến cục bộ)
-│   │   ├── 04_MethodObject_After.cs                            (Replace Method with Method Object)
-│   │   └── 04_MethodObject_Real_DocSoThanhChu.cs               (Refactor Num2Str.cs & Tính giá vốn BQGQ Mục 3 PDF)
-│   └── Program.cs
-│
-├── DPM235407_NguyenTuanAnh_BaiTap03_02_MovingFeatures/          <-- [Nhóm 2] Moving Features between Objects
-│   ├── 01_Move_Method_Field/
-│   │   ├── 01_MoveMethod_Before.cs                             (Code Smell: Feature Envy trên Form UI)
-│   │   ├── 01_MoveMethod_After.cs                              (Move Method & Information Expert)
-│   │   └── 01_MoveMethod_Real_CapNhatCongNoVaGiaBan.cs         (Move tính công nợ & thành tiền vào PhieuBan/ChiTiet)
-│   ├── 02_Extract_Inline_Class/
-│   │   ├── 02_ExtractClass_Before.cs                           (Code Smell: Large Class / Divergent Change)
-│   │   ├── 02_ExtractClass_After.cs                            (Extract Class ThongTinLienHe, DiaChi, NganHang)
-│   │   └── 02_ExtractClass_Real_DiaChiLienHeDaiLy.cs           (Tách địa chỉ giao hàng ruộng & GPS cho Đại lý)
-│   ├── 03_Hide_Delegate_Remove_MiddleMan/
-│   │   ├── 03_HideDelegate_Before.cs                           (Code Smell: Message Chains / Vi phạm Demeter)
-│   │   ├── 03_HideDelegate_After.cs                            (Hide Delegate)
-│   │   └── 03_HideDelegate_Real_TruyXuatDonGiaLoHang.cs        (Đóng gói chuỗi gọi MaSanPham.SanPham.DonGia)
-│   ├── 04_Foreign_Method_Local_Extension/
-│   │   ├── 04_Extension_Before.cs                              (Code tiện ích DateTime viết rải rác)
-│   │   ├── 04_Extension_After.cs                               (Introduce Local Extension / Extension Methods)
-│   │   └── 04_Extension_Real_QuanLyHanDungFEFO.cs              (Extension Methods lọc cận date & sắp xếp FEFO)
-│   └── Program.cs
-│
-└── DPM235407_NguyenTuanAnh_BaiTap03_03_OrganizingData/           <-- [Nhóm 3] Organizing Data
-    ├── 01_Self_Encapsulate_Collection/
-    │   ├── 01_EncapsulateCollection_Before.cs                  (Để lộ List<T> public getter/setter)
-    │   ├── 01_EncapsulateCollection_After.cs                   (Encapsulate Collection với ReadOnlyCollection)
-    │   └── 01_EncapsulateCollection_Real_DanhSachChiTietPhieuBan.cs (Đóng gói IList<ChiTietPhieuBan> trong PhieuBan.cs)
-    ├── 02_Replace_Data_Value_With_Object/
-    │   ├── 02_ValueObject_Before.cs                            (Code Smell: Primitive Obsession)
-    │   ├── 02_ValueObject_After.cs                             (Tạo Value Objects MaVachEAN13, SoDienThoaiVN)
-    │   └── 02_ValueObject_Real_MaVachDonViTienTe.cs            (Value Objects TienTeNongDuoc & QuyCachDongGoi)
-    ├── 03_Replace_Magic_Numbers_Constants/
-    │   ├── 03_MagicNumber_Before.cs                            (Magic Numbers 0.1, 0.05, 15, 30 rải rác)
-    │   ├── 03_MagicNumber_After.cs                             (Replace Magic Number with Symbolic Constant)
-    │   └── 03_MagicNumber_Real_DinhMucNongDuoc.cs              (Hằng số quy định chuẩn kho nông dược An Giang)
-    ├── 04_Replace_Type_Code_State_Subclass/
-    │   ├── 04_TypeCode_Before.cs                               (Switch-case theo mã loại nguyên thủy)
-    │   ├── 04_TypeCode_After.cs                                (Replace Type Code with Subclasses / OCP)
-    │   └── 04_TypeCode_Real_PhanLoaiSanPhamVaKhachHang.cs      (Đa hình Thuốc độc cao, Sinh học, Phân bón lá)
-    ├── 05_Change_Value_Reference/
-    │   ├── 05_ValueRef_Before.cs                               (New LoHang độc lập làm mất nhất quán tồn kho)
-    │   ├── 05_ValueRef_After.cs                                (Change Value to Reference / Kho Repository)
-    │   └── 05_ValueRef_Real_DinhDanhLoHangTonKho.cs            (Phân biệt Entity Lô Hàng vs Value Object Bảng Giá)
-    └── Program.cs
-```
+Mỗi kỹ thuật đều được tổ chức thành thư mục độc lập gồm 3 file:
+1. `..._Before.cs`: Mã nguồn trước khi tái cấu trúc chứa Code Smell.
+2. `..._After.cs`: Mã nguồn sau khi áp dụng kỹ thuật chuẩn Refactoring.Guru.
+3. `..._Real.cs`: Mã nguồn ứng dụng giải quyết bài toán nghiệp vụ Cửa hàng Nông Dược An Giang (`FileDuocThayDua`).
 
 ---
 
-## 🎯 CHI TIẾT CÁC NHÓM KỸ THUẬT VÀ ỨNG DỤNG THỰC TẾ
+### 🌟 NHÓM 1: COMPOSING METHODS (9 KỸ THUẬT)
+> Project: `DPM235407_NguyenTuanAnh_BaiTap03_01_ComposingMethods`
 
-### 1. Nhóm 1: Composing Methods (Tổ chức lại các phương thức)
-- **Extract Method & Inline Method:**
-  - *Trước refactor:* Phương thức `Luu()` trong `frmBanLe.cs` quá dài (> 100 dòng), làm từ việc kiểm tra dữ liệu rỗng, cộng dồn DataRow, trừ kho đến in ấn.
-  - *Sau refactor:* Tách thành `ValidateThongTinPhieu()`, `TinhToanTaiChinh()`, `CapNhatTonKhoFEFO()`, `InPhieuXuatKho()`.
-- **Replace Temp with Query & Extract Variable:**
-  - *Trước refactor:* Sử dụng hàng loạt biến tạm `giaGoc`, `chietKhau`, `phiVanChuyen`, `vat` trong các sự kiện giao diện.
-  - *Sau refactor:* Chuyển thành các thuộc tính Query thuần túy (`TongTienNiemYet`, `TiLeChietKhau`, `CuocVanChuyenXeTai`, `ThueVATNongNghiep`).
-- **Split Temporary Variable & Remove Assignments to Parameters:**
-  - *Trước refactor:* Tái sử dụng một biến số lượng và trừ trực tiếp lên tham số đầu vào khi phân bổ kho.
-  - *Sau refactor:* Giữ nguyên tham số `in`, tách biến tạm `soLuongConLaiCanDapUng` và `soLuongLayTuLo`.
-- **Replace Method with Method Object & Substitute Algorithm:**
-  - *Trước refactor:* Lớp `Num2Str.cs` đọc tiền bằng chữ chứa chuỗi `switch-case` lồng phức tạp và nhiều biến tạm nối chuỗi.
-  - *Sau refactor:* Thay thế bằng thuật toán xử lý nhóm 3 chữ số sạch sẽ qua `StringBuilder` và đóng gói thuật toán tính giá vốn BQGQ thành `TinhGiaBinhQuanGiaQuyenCalculator`.
-
----
-
-### 2. Nhóm 2: Moving Features between Objects (Di chuyển tính năng)
-- **Move Method & Move Field:**
-  - *Trước refactor:* Form giao diện `frmBanLe.cs` tự tính `numThanhTien.Value = numDonGia.Value * numSoLuong.Value` và `numConNo.Value = numTongTien.Value - numDaTra.Value` (Code smell: Feature Envy).
-  - *Sau refactor:* Chuyển toàn bộ phương thức tính toán về cho `PhieuBan` và `ChiTietPhieuBan` (Information Expert).
-- **Extract Class & Inline Class:**
-  - *Trước refactor:* Lớp `KhachHang`, `DaiLy`, `NhaCungCap` chứa lẫn lộn thông tin pháp nhân, chuỗi địa chỉ tự do và tài khoản ngân hàng.
-  - *Sau refactor:* Tách thành `DiaChiGiaoHangNongDuoc` (hỗ trợ định vị GPS tận ruộng) và `ThongTinLienHe`.
-- **Hide Delegate & Remove Middle Man:**
-  - *Trước refactor:* Client gọi chuỗi `chiTiet.MaSanPham.SanPham.GiaBanLe` (vi phạm Law of Demeter).
-  - *Sau refactor:* `DongBanHangChiTiet` và `LoMaSanPhamNongDuoc` tự đóng gói việc truy xuất đơn giá và tên thuốc.
-- **Introduce Local Extension (C# Extension Methods):**
-  - *Trước refactor:* Các phép kiểm tra ngày hết hạn lặp lại khắp nơi.
-  - *Sau refactor:* Viết Extension Methods cho `DateTime` và `IEnumerable<LoHangNongDuoc>`: `IsCanDate()`, `IsDaHetHan()`, `LayCacLoCanDate()`, `SapXepTheoFEFO()`.
+| STT | Kỹ thuật Refactoring | Liên kết Refactoring Guru | Ứng dụng thực tế Nông Dược An Giang |
+|:---:|:---|:---|:---|
+| 1 | [Extract Method](https://refactoring.guru/extract-method) | `01_ExtractMethod/` | Tách hàm `Luu()` trong `frmBanLe.cs` thành kiểm tra hợp lệ, trừ kho FEFO, tính tiền và in phiếu |
+| 2 | [Inline Method](https://refactoring.guru/inline-method) | `02_InlineMethod/` | Gộp phương thức kiểm tra tồn kho an toàn `CanNhapThemThuocBVTV()` trong `frmSoLuongTon.cs` |
+| 3 | [Extract Variable](https://refactoring.guru/extract-variable) | `03_ExtractVariable/` | Đặt tên biến rõ nghĩa cho điều kiện chiết khấu vụ mùa Đông Xuân cho Hợp tác xã |
+| 4 | [Inline Temp](https://refactoring.guru/inline-temp) | `04_InlineTemp/` | Loại bỏ biến tạm trung gian khi kiểm tra công dụng thuốc trị đạo ôn |
+| 5 | [Replace Temp with Query](https://refactoring.guru/replace-temp-with-query) | `05_ReplaceTempWithQuery/` | Chuyển các biến tạm tính chiết khấu, VAT sang thuộc tính Query trong `frmBanSi.cs` |
+| 6 | [Split Temporary Variable](https://refactoring.guru/split-temporary-variable) | `06_SplitTemporaryVariable/` | Tách biến tạm lưu khối lượng thuốc riêng và cước xe tải riêng trong phân bổ vận chuyển |
+| 7 | [Remove Assignments to Parameters](https://refactoring.guru/remove-assignments-to-parameters) | `07_RemoveAssignmentsToParameters/` | Dùng từ khóa `in` bảo toàn tham số gốc khi tính tiền trợ giá phân bón cho hộ nghèo |
+| 8 | [Replace Method with Method Object](https://refactoring.guru/replace-method-with-method-object) | `08_ReplaceMethodWithMethodObject/` | Đóng gói thuật toán tính giá vốn Bình quân gia quyền (Mục 3 PDF) thành Calculator Object |
+| 9 | [Substitute Algorithm](https://refactoring.guru/substitute-algorithm) | `09_SubstituteAlgorithm/` | Thay thế thuật toán duyệt mảng thủ công bằng LINQ khi lọc danh sách thuốc BVTV hết hạn |
 
 ---
 
-### 3. Nhóm 3: Organizing Data (Tổ chức dữ liệu)
-- **Self Encapsulate Field & Encapsulate Collection:**
-  - *Trước refactor:* `PhieuBan.cs` để `public IList<ChiTietPhieuBan> ChiTiet { get; set; }` cho phép can thiệp trực tiếp làm sai lệch tổng tiền.
-  - *Sau refactor:* Danh sách được giữ `private`, trả về `IReadOnlyList<T>` và chỉ cho phép thêm/xóa qua phương thức nghiệp vụ.
-- **Replace Data Value with Object (Value Objects):**
-  - *Trước refactor:* Dùng kiểu `string` thô cho mã vạch, `long` cho tiền tệ (Primitive Obsession).
-  - *Sau refactor:* Tạo `TienTeNongDuoc`, `QuyCachDongGoi`, `MaVachEAN13`.
-- **Replace Magic Number with Symbolic Constant:**
-  - *Trước refactor:* Sử dụng các con số `15`, `30`, `0.12`, `0.05` không rõ ngữ cảnh.
-  - *Sau refactor:* Định nghĩa tập trung trong `QuyDinhNongDuocAnGiang` (`TonKhoAnToanToiThieu = 15`, `SoNgayCanhBaoCanDate = 30`).
-- **Replace Type Code with Subclasses / Polymorphism:**
-  - *Trước refactor:* Dùng `int LoaiKhachHang` kết hợp chuỗi `switch-case` tính chiết khấu.
-  - *Sau refactor:* Triển khai lớp con đa hình `KhachHangDaiLyCap1`, `KhachHangHopTacXa`, `KhachHangNongDan` và `ILoaiThuocNongDuoc`.
-- **Change Value to Reference:**
-  - *Trước refactor:* Khởi tạo đối tượng `LoHang` độc lập tại từng đơn hàng làm mất đồng bộ tồn kho.
-  - *Sau refactor:* Quản lý tham chiếu Lô Hàng duy nhất trong `KhoTrungTamNongDuoc_Real`.
+### 🚀 NHÓM 2: MOVING FEATURES BETWEEN OBJECTS (8 KỸ THUẬT)
+> Project: `DPM235407_NguyenTuanAnh_BaiTap03_02_MovingFeatures`
+
+| STT | Kỹ thuật Refactoring | Liên kết Refactoring Guru | Ứng dụng thực tế Nông Dược An Giang |
+|:---:|:---|:---|:---|
+| 1 | [Move Method](https://refactoring.guru/move-method) | `01_MoveMethod/` | Chuyển hàm tính dư nợ `GhiNhanThanhToan()` từ `frmBanLe.cs` vào `PhieuBan` (Information Expert) |
+| 2 | [Move Field](https://refactoring.guru/move-field) | `02_MoveField/` | Chuyển trường `QuyCach` từ chi tiết đơn hàng sang lớp `DanhMucThuocBVTV` |
+| 3 | [Extract Class](https://refactoring.guru/extract-class) | `03_ExtractClass/` | Tách `DiaDiemGiaoHangRuong` (kèm tọa độ GPS) ra khỏi `KhachHangNongDan` |
+| 4 | [Inline Class](https://refactoring.guru/inline-class) | `04_InlineClass/` | Gộp lớp đơn vị tiền tệ rỗng trực tiếp vào bảng báo giá nông dược `BaoGiaNongDuoc` |
+| 5 | [Hide Delegate](https://refactoring.guru/hide-delegate) | `05_HideDelegate/` | Đóng gói chuỗi gọi `LoHang.Thuoc.GiaLe` qua phương thức `DonGia` của Lô hàng (Law of Demeter) |
+| 6 | [Remove Middle Man](https://refactoring.guru/remove-middle-man) | `06_RemoveMiddleMan/` | Cho phép `PhieuBanLe` truy cập trực tiếp thông tin vị trí kệ kho `KhoHang.ViTriDay` |
+| 7 | [Introduce Foreign Method](https://refactoring.guru/introduce-foreign-method) | `07_IntroduceForeignMethod/` | Tạo hàm `TinhNgayGiaoNongDuoc` tự động tránh ngày Chủ nhật khi giao phân bón |
+| 8 | [Introduce Local Extension](https://refactoring.guru/introduce-local-extension) | `08_IntroduceLocalExtension/` | Xây dựng C# Extension Methods cho `DateTime` kiểm tra hạn dùng FEFO: `LayTrangThaiHSD()` |
 
 ---
 
-## 🚀 HƯỚNG DẪN BIÊN DỊCH VÀ CHẠY CHƯƠNG TRÌNH
+### 📦 NHÓM 3: ORGANIZING DATA (15 KỸ THUẬT)
+> Project: `DPM235407_NguyenTuanAnh_BaiTap03_03_OrganizingData`
 
-### 1. Biên dịch toàn bộ Solution:
+| STT | Kỹ thuật Refactoring | Liên kết Refactoring Guru | Ứng dụng thực tế Nông Dược An Giang |
+|:---:|:---|:---|:---|
+| 1 | [Change Value to Reference](https://refactoring.guru/change-value-to-reference) | `01_ChangeValueToReference/` | Quản lý duy nhất một thực thể `LoThuocThucThe` trong kho để trừ tồn nhất quán |
+| 2 | [Change Reference to Value](https://refactoring.guru/change-reference-to-value) | `02_ChangeReferenceToValue/` | Chuyển tọa độ ruộng giao hàng thành `readonly record struct ToaDoRuong` bất biến |
+| 3 | [Duplicate Observed Data](https://refactoring.guru/duplicate-observed-data) | `03_DuplicateObservedData/` | Tách Model và phát sự kiện `OnCanhBaoTonKho` khi thuốc chạm ngưỡng nguy hiểm $\le 15$ |
+| 4 | [Self Encapsulate Field](https://refactoring.guru/self-encapsulate-field) | `04_SelfEncapsulateField/` | Truy cập giá bán qua getter để lớp con `PhanBonTroGia` ghi đè giá trợ cấp |
+| 5 | [Replace Data Value with Object](https://refactoring.guru/replace-data-value-with-object) | `05_ReplaceDataValueWithObject/` | Thay chuỗi string mã vạch bằng Value Object `MaVachEAN13` |
+| 6 | [Replace Array with Object](https://refactoring.guru/replace-array-with-object) | `06_ReplaceArrayWithObject/` | Thay thế mảng dữ liệu thô trong `frmNhapHang.cs` bằng đối tượng `LoHangNhapKho` |
+| 7 | [Change Unidirectional to Bidirectional](https://refactoring.guru/change-unidirectional-association-to-bidirectional) | `07_ChangeUnidirectionalToBidirectional/` | Thiết lập liên kết 2 chiều giữa `PhieuBan` và `ChiTiet` (`BusinessObject/PhieuBan.cs`) |
+| 8 | [Change Bidirectional to Unidirectional](https://refactoring.guru/change-bidirectional-association-to-unidirectional) | `08_ChangeBidirectionalToUnidirectional/` | Xóa liên kết ngược không cần thiết từ `DonViTinh` về `SanPham` |
+| 9 | [Encapsulate Field](https://refactoring.guru/encapsulate-field) | `09_EncapsulateField/` | Đóng gói trường `_soLuongTon` với validation không cho phép giá trị âm |
+| 10 | [Encapsulate Collection](https://refactoring.guru/encapsulate-collection) | `10_EncapsulateCollection/` | Trả về `IReadOnlyList<string>` để ngăn chặn sửa đổi danh sách mặt hàng trái phép |
+| 11 | [Replace Magic Number with Symbolic Constant](https://refactoring.guru/replace-magic-number-with-symbolic-constant) | `11_ReplaceMagicNumberWithSymbolicConstant/` | Định nghĩa hằng số `SoNgayCanhBaoCanDate = 30`, `TiLeChietKhauDaiLyCap1 = 0.12` |
+| 12 | [Replace Type Code with Class](https://refactoring.guru/replace-type-code-with-class) | `12_ReplaceTypeCodeWithClass/` | Thay mã số cấp đại lý bằng đối tượng `CapDaiLy_Real.Cap1`, `Cap2` |
+| 13 | [Replace Type Code with Subclasses](https://refactoring.guru/replace-type-code-with-subclasses) | `13_ReplaceTypeCodeWithSubclasses/` | Thay thế phân loại thuốc bằng kế thừa đa hình `ThuocTruSauDocCao`, `ChePhamSinhHoc` |
+| 14 | [Replace Type Code with State/Strategy](https://refactoring.guru/replace-type-code-with-state-strategy) | `14_ReplaceTypeCodeWithStateStrategy/` | Áp dụng Strategy hoán đổi phương pháp tính giá xuất kho `StrategyFIFO` vs `StrategyBQGQ` |
+| 15 | [Replace Subclass with Fields](https://refactoring.guru/replace-subclass-with-fields) | `15_ReplaceSubclassWithFields/` | Thay thế các lớp con dung tích bằng trường `DungTichMl` và factory `ChaiNho()`, `ChaiLon()` |
+
+---
+
+## 🚀 HƯỚNG DẪN BIÊN DỊCH VÀ CHẠY THỬ NGHIỆM
+
 ```powershell
 cd C:\Hoc\ThietKeBaoTriPhanMem\DPM235407_NguyenTuanAnh_BaiTap03_RefactoringTechniques
-dotnet build DPM235407_NguyenTuanAnh_BaiTap03_RefactoringTechniques.sln
-```
 
-### 2. Chạy từng Project kiểm tra kết quả:
-```powershell
-# Chạy Nhóm 1: Composing Methods
+# 1. Biên dịch toàn bộ Solution
+dotnet build DPM235407_NguyenTuanAnh_BaiTap03_RefactoringTechniques.sln
+
+# 2. Chạy Nhóm 1: Composing Methods (9 kỹ thuật)
 dotnet run --project DPM235407_NguyenTuanAnh_BaiTap03_01_ComposingMethods
 
-# Chạy Nhóm 2: Moving Features between Objects
+# 3. Chạy Nhóm 2: Moving Features (8 kỹ thuật)
 dotnet run --project DPM235407_NguyenTuanAnh_BaiTap03_02_MovingFeatures
 
-# Chạy Nhóm 3: Organizing Data
+# 4. Chạy Nhóm 3: Organizing Data (15 kỹ thuật)
 dotnet run --project DPM235407_NguyenTuanAnh_BaiTap03_03_OrganizingData
 ```
 
