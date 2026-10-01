@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 # 🌾 THIẾT KẾ PHÁT TRIỂN & BẢO TRÌ PHẦN MỀM
 ### HỆ THỐNG QUẢN LÝ BÁN HÀNG CÔNG TY NÔNG DƯỢC AN GIANG
@@ -181,29 +181,37 @@ ThietKeBaoTriPhanMem/
 │   ├── DPM235407_NguyenTuanAnh_Tuan01_Singleton-DP/
 │   └── DPM235407_NguyenTuanAnh_Tuan01_Singleton_Real_Database_DP/
 │
-└── DPM235407_NguyenTuanAnh_Tuan02_BehavioralPatterns/                 <-- BÀI TẬP TUẦN 02: BEHAVIORAL PATTERNS
-    ├── DPM235407_NguyenTuanAnh_Tuan02_BehavioralPatterns.sln
+├── DPM235407_NguyenTuanAnh_BaiTap01_StructuralPatterns/                <-- BÀI TẬP 01: STRUCTURAL PATTERNS (7 MẪU)
+│   ├── DPM235407_NguyenTuanAnh_BaiTap01_StructuralPatterns.sln
+│   ├── README.md
+│   ├── DPM235407_NguyenTuanAnh_BaiTap01_Adapter-DP/
+│   ├── DPM235407_NguyenTuanAnh_BaiTap01_Bridge-DP/
+│   ├── DPM235407_NguyenTuanAnh_BaiTap01_Composite-DP/
+│   ├── DPM235407_NguyenTuanAnh_BaiTap01_Decorator-DP/
+│   ├── DPM235407_NguyenTuanAnh_BaiTap01_Facade-DP/
+│   ├── DPM235407_NguyenTuanAnh_BaiTap01_Flyweight-DP/
+│   └── DPM235407_NguyenTuanAnh_BaiTap01_Proxy-DP/
+│
+├── DPM235407_NguyenTuanAnh_Tuan02_BehavioralPatterns/                 <-- BÀI TẬP TUẦN 02: BEHAVIORAL PATTERNS
+│   ├── DPM235407_NguyenTuanAnh_Tuan02_BehavioralPatterns.sln
+│   ├── README.md
+│   ├── DPM235407_NguyenTuanAnh_Tuan02_ChainOfResponsibility-DP/
+│   ├── DPM235407_NguyenTuanAnh_Tuan02_Command-DP/
+│   ├── DPM235407_NguyenTuanAnh_Tuan02_Iterator-DP/
+│   ├── DPM235407_NguyenTuanAnh_Tuan02_Mediator-DP/
+│   ├── DPM235407_NguyenTuanAnh_Tuan02_Memento-DP/
+│   ├── DPM235407_NguyenTuanAnh_Tuan02_Observer-DP/
+│   ├── DPM235407_NguyenTuanAnh_Tuan02_State-DP/
+│   ├── DPM235407_NguyenTuanAnh_Tuan02_Strategy-DP/
+│   ├── DPM235407_NguyenTuanAnh_Tuan02_TemplateMethod-DP/
+│   └── DPM235407_NguyenTuanAnh_Tuan02_Visitor-DP/
+│
+└── DPM235407_NguyenTuanAnh_BaiTap03_RefactoringTechniques/            <-- BÀI TẬP 03: REFACTORING TECHNIQUES
+    ├── DPM235407_NguyenTuanAnh_BaiTap03_RefactoringTechniques.sln
     ├── README.md
-    ├── DPM235407_NguyenTuanAnh_Tuan02_ChainOfResponsibility-DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_ChainOfResponsibility_Real_XacThuc_DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_Command-DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_Command_Real_HoaDon_DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_Iterator-DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_Iterator_Real_KhoHang_DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_Mediator-DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_Mediator_Real_DieuPhoi_DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_Memento-DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_Memento_Real_HoaDon_DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_Observer-DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_Observer_Real_TonKho_DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_State-DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_State_Real_DonHang_DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_Strategy-DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_Strategy_Real_GiaXuat_DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_TemplateMethod-DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_TemplateMethod_Real_BanHang_DP/
-    ├── DPM235407_NguyenTuanAnh_Tuan02_Visitor-DP/
-    └── DPM235407_NguyenTuanAnh_Tuan02_Visitor_Real_ThongKe_DP/
+    ├── DPM235407_NguyenTuanAnh_BaiTap03_01_ComposingMethods/           (Extract Method, Query, Split Temp, Method Object)
+    ├── DPM235407_NguyenTuanAnh_BaiTap03_02_MovingFeatures/             (Move Method, Extract Class, Hide Delegate, Extension)
+    └── DPM235407_NguyenTuanAnh_BaiTap03_03_OrganizingData/              (Encapsulate Collection, Value Objects, Constants, Polymorphism)
 ```
 
 ---
@@ -226,8 +234,14 @@ cd ThietKeBaoTriPhanMem
 # Biên dịch Solution Tuần 01: Creational Patterns
 dotnet build DPM235407_NguyenTuanAnh_Tuan01_greationalDesignPatter/DPM235407_NguyenTuanAnh_Tuan01_greationalDesignPatter.sln
 
+# Biên dịch Solution Bài Tập 01: Structural Patterns
+dotnet build DPM235407_NguyenTuanAnh_BaiTap01_StructuralPatterns/DPM235407_NguyenTuanAnh_BaiTap01_StructuralPatterns.sln
+
 # Biên dịch Solution Tuần 02: Behavioral Patterns (20 Projects)
 dotnet build DPM235407_NguyenTuanAnh_Tuan02_BehavioralPatterns/DPM235407_NguyenTuanAnh_Tuan02_BehavioralPatterns.sln
+
+# Biên dịch Solution Bài Tập 03: Refactoring Techniques
+dotnet build DPM235407_NguyenTuanAnh_BaiTap03_RefactoringTechniques/DPM235407_NguyenTuanAnh_BaiTap03_RefactoringTechniques.sln
 ```
 > *Tất cả các dự án đều biên dịch thành công 100%: `0 Error(s), 0 Warning(s)`.*
 
